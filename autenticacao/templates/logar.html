@@ -1,0 +1,67 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'autenticacao/css/cadastro.css' %}">
+{% endblock %}
+
+{% block 'titulo' %}Login{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-7">
+                <div class="logo_sidebar">
+                    <h2 class="logo">
+
+                        <img class="img_logo_sidebar" src="">
+                    </h2>
+                </div>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}}">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                <div class="area_cadastrar">
+                    <form action="{% url 'logar' %}" method="post">{% csrf_token %}
+                        <h2 class="titulo_area_cadastrar">Login</h2>
+                        <br>
+                        <input name="username" class="input_cadastrar input_cadastrar_nome" type="text" placeholder="Username...">
+                        <br>
+                        <br>
+                        <input name="senha" class="input_cadastrar input_cadastrar_senha" type="password" placeholder="Senha...">
+                        <br>
+                        <input class="btn_cadastrar" type="submit" value="Divirta-se">
+                        <hr>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="col-md-5 sidebar">
+
+                <div class="corpo_sidebar">
+                    <div>
+
+                        <h2 class="titulo cor_branca">GramLine</h2>
+                    </div>
+                    <div>
+                        <br><br>
+                        <p class="cor_branca descricao">welcome!</p>
+                        <br>
+                        <p style="margin-top:-20px" class="cor_branca descricao">Aqui você mostra quem realmente é</p>
+                        <br>
+                        <br>
+                        <a class="btn_logar" href="{% url 'cadastro' %}">Crie uma conta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GramLine.com</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  </head>
+  <body>
+
+<nav class="navbar navbar-expand-lg" style="background-color: blue;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'indexplataforma' %}}" style="color: white;"><b>GramLife</b></a>
+        <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
+        <a class="navbar-brand" href="#" style="color: white;">Amigos</a>
+        <a class="navbar-brand" href="{% url 'sair' %}" style="color: white;">Sair</a>
+    </div>
+</nav>
+
+<div class="card text-center">
+  <div class="card-header">
+GramLine: Mostrando quem você é!
+  </div>
+  <div class="card-body">
+
+    <h5 class="card-title">Mensagem diária</h5>
+    <p class="card-text">Mural:</p>
+    <form action="{% url 'indexplataforma' %}" method="post">{% csrf_token %}
+        <textarea rows="3" cols="40" placeholder="Voce tem 255 caracteres . . . " name="mensagem_de_hoje"></textarea>
+        <br><style>
+            input[type="submit"] {
+            background-color: #ffffff;
+            }
+        </style>
+        <input type="submit" value="Publicar">
+    </form>
+  </div>
+</div>
+<center>
+
+    {% for mensagem in mensagens %}
+    {% for foto in mensagem.usuario.fotoperfil_set.all %}
+    <div class="card mb-3" style="max-width: 600px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if foto %}
+                    <img src="{{ foto.foto.url }}" width="100%">
+                {% endif %}
+            </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ mensagem.usuario }}</h5>
+                        <p class="card-text">{{ mensagem.mensagem }}</p>
+                        <p class="card-text"><small class="text-body-secondary"><a href="#">< voltar </a></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}{% endfor %}
+</center><br><br><br><hr>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  </body>
+</html>

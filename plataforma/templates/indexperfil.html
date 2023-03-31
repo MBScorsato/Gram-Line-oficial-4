@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  </head>
+  <body>
+
+<nav class="navbar navbar-expand-lg" style="background-color: blue;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>GramLine</b></a>
+        <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
+        <a class="navbar-brand" href="#" style="color: white;">Amigos</a>
+        <a class="navbar-brand" href="#" style="color: white;">Conf.</a>
+        <a class="navbar-brand" href="{% url 'sair' %}" style="color: white;">Sair</a>
+    </div>
+</nav>
+
+
+<form method="post" enctype="multipart/form-data" onsubmit="enviarForm(event)">
+  {% csrf_token %}
+  <input type="file" name="imagem" onchange="ativaBotao()">
+  <button type="submit" class="btn btn-primary" id="botao-enviar" disabled>Enviar</button>
+</form>
+
+<div class="alert alert-success" id="alerta-sucesso" style="display: none;">
+  A foto foi enviada com sucesso!
+</div>
+
+<div class="alert alert-danger" id="alerta-erro" style="display: none;">
+  Alguma coisa deu errado. Tente novamente!
+</div>
+
+<script>
+  function ativaBotao() {
+    document.getElementById("botao-enviar").disabled = false;
+  }
+
+  function enviarForm(event) {
+    event.preventDefault(); // Evita que a página seja recarregada
+
+    var form = event.target;
+    var botao = form.querySelector("#botao-enviar");
+    var alertaSucesso = document.getElementById("alerta-sucesso");
+    var alertaErro = document.getElementById("alerta-erro");
+
+    botao.innerHTML = "Enviando..."; // Muda o texto do botão para "Enviando..."
+
+    var input = form.querySelector('input[name="imagem"]');
+    if (input.files[0].name.endsWith('.png')) { // Verifica se o arquivo selecionado tem a extensão ".png"
+      alertaErro.innerHTML = "Arquivos com extensão .png não podem ser carregados.";
+      alertaErro.style.display = "block";
+      setTimeout(function() {
+        alertaErro.style.display = "none";
+      }, 5000); // Oculta o alerta depois de 5 segundos
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        botao.innerHTML = "Enviar"; // Muda o texto do botão de volta para "Enviar"
+        form.reset(); // Reseta o formulário
+        alertaSucesso.style.display = "block"; // Exibe o alerta de sucesso
+        setTimeout(function() {
+          alertaSucesso.style.display = "none";
+        }, 5000); // Oculta o alerta depois de 5 segundos
+      } else {
+        botao.innerHTML = "Enviar"; // Muda o texto do botão de volta para "Enviar"
+        alertaErro.style.display = "block"; // Exibe o alerta de erro
+        setTimeout(function() {
+          alertaErro.style.display = "none";
+        }, 5000); // Oculta o alerta depois de 5 segundos
+      }
+    };
+    xhr.send(new FormData(form));
+  }
+</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  </body>
+</html>
