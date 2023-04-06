@@ -14,3 +14,9 @@ class Mensagem(models.Model):
 class FotoPerfil(models.Model):
     usuario_foto = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     foto = models.ImageField(upload_to='img')
+
+
+class PontosUsuario(models.Model):
+    usuario_pontos = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    pontos = models.IntegerField(default=0)
+

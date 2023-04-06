@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,20 +11,27 @@
 
 <nav class="navbar navbar-expand-lg" style="background-color: blue;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>GramLine</b></a>
-        <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
+        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>Início</b></a>
+            <a class="navbar-brand" href="#" style="color: white;">Mural</a>
         <a class="navbar-brand" href="#" style="color: white;">Amigos</a>
-        <a class="navbar-brand" href="#" style="color: white;">Conf.</a>
         <a class="navbar-brand" href="{% url 'sair' %}" style="color: white;">Sair</a>
+
     </div>
 </nav>
+<br>
 
 
+<center><span class="badge text-bg-success">Selecione sua foto de perfil</span></center>
+<br>
 <form method="post" enctype="multipart/form-data" onsubmit="enviarForm(event)">
   {% csrf_token %}
   <input type="file" name="imagem" onchange="ativaBotao()">
-  <button type="submit" class="btn btn-primary" id="botao-enviar" disabled>Enviar</button>
-</form>
+    <center><br><span class="badge text-bg-danger">Depois de selecionar a imagem 'click' em Enviar</span>
+<br><br>
+
+  <button type="submit" class="btn btn-primary" id="botao-enviar" disabled>Enviar</button></center>
+</form><br>
+<hr>
 
 <div class="alert alert-success" id="alerta-sucesso" style="display: none;">
   A foto foi enviada com sucesso!
