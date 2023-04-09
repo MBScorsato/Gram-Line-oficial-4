@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,16 +11,18 @@
 
 <nav class="navbar navbar-expand-lg" style="background-color: blue;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>Início</b></a>
-            <a class="navbar-brand" href="#" style="color: white;">Mural</a>
-        <a class="navbar-brand" href="#" style="color: white;">Amigos</a>
-        <a class="navbar-brand" href="{% url 'sair' %}" style="color: white;">Sair</a>
-
+        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>GramLine</b></a>
+        <a class="navbar-brand" href="{% url 'indexranking' %}" style="color: white;">Ranking</a>
+        <a class="navbar-brand" href="#" style="color: white;">Direct</a>
+        <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
     </div>
 </nav>
+
+
+<center>
+    Galeria | Seguindo | Seguidor | Amigos | Sair
+</center>
 <br>
-
-
 <center><span class="badge text-bg-success">Selecione sua foto de perfil</span></center>
 <br>
 <form method="post" enctype="multipart/form-data" onsubmit="enviarForm(event)">
@@ -32,6 +34,13 @@
   <button type="submit" class="btn btn-primary" id="botao-enviar" disabled>Enviar</button></center>
 </form><br>
 <hr>
+
+<div class="card">
+  <div class="card-body">
+<center>
+Quem somos? | Objetivos | Diferencial | Nossas outras redes
+  </div></div>
+</center>
 
 <div class="alert alert-success" id="alerta-sucesso" style="display: none;">
   A foto foi enviada com sucesso!
@@ -88,8 +97,7 @@
   }
 </script>
 
-
-
+</div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
   </body>

@@ -1,9 +1,13 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from plataforma.models import Mensagem, FotoPerfil, PontosUsuario
+from django.utils import timezone
+from datetime import datetime, timedelta
+from plataforma.models import Mensagem, FotoPerfil, PontosUsuario, UltimaMensagem
+from django.contrib.messages import constants
 
 
 @login_required(login_url='/auth/cadastro')
@@ -27,24 +31,48 @@ def indexplataforma(request):
         return render(request, 'plataforma.html', context)
 
     elif request.method == 'POST':
+
+        # verifica se existe alguma mensagem na base de dados
+        ultima_mensagem, created = UltimaMensagem.objects.get_or_create(usuario=request.user)
+
+        # Obtenha a data da ultima mensagem com fuso horário definido
+        data_ultima_mensagem = ultima_mensagem.data_ultima_mensagem.astimezone()
+
+        # Obtenha a data atual com fuso horário definido
+        data_atual = timezone.now()
+
+        # Calcule a diferença de tempo
+        diferenca = data_atual - data_ultima_mensagem
+
+        # Compare se a diferença é menor a uma hora
+        if diferenca < timedelta(hours=1):
+            restante = (timedelta(hours=1) - diferenca).total_seconds() // 60
+            messages.add_message(request, constants.ERROR,
+                                 f'Você precisa esperar mais {int(restante)} minutos')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
         mensagem_de_hoje = request.POST.get('mensagem_de_hoje')
 
         # SE O USUÁRIO NÃO DIGITAR NADA NÃO SALVA E NEM PRINTA NA TELA
+
         if len(mensagem_de_hoje) == 0:
-            return redirect(reverse('indexplataforma'))
+            return redirect('indexplataforma')
 
         usuario = request.user
+
         mensagem = Mensagem(mensagem=mensagem_de_hoje, usuario=usuario)
+
         mensagem.save()
+
         pontos, created = PontosUsuario.objects.get_or_create(usuario_pontos=usuario)
 
-        usuario = request.user
         pontos.pontos += 1
-        pontos.save()
-        return redirect(reverse('indexplataforma'))
 
-        # se chegar neste ponto é porque deu tudo certo e o usuário enviou uma mensagem
-        # aqui deve-se atribuie +1 na tabela de salvar os pontos
+        pontos.save()
+
+        ultima_mensagem.atualizar_data_ultima_mensagem()
+
+        return redirect('indexplataforma')
 
 
 @login_required(login_url='/auth/cadastro')
@@ -70,8 +98,4 @@ def indexperfil(request):
         return redirect(reverse('indexperfil'))
 
     return redirect(reverse('indexperfil'))
-
-
-
-
 

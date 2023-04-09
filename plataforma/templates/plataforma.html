@@ -14,8 +14,8 @@
 
 <nav class="navbar navbar-expand-lg" style="background-color: blue;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'indexplataforma' %}}" style="color: white;"><b>GramLine</b></a>
-        <a class="navbar-brand" href="{% url 'ranking' %}" style="color: white;">Ranking</a>
+        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>GramLine</b></a>
+        <a class="navbar-brand" href="{% url 'indexranking' %}" style="color: white;">Ranking</a>
         <a class="navbar-brand" href="#" style="color: white;">Direct</a>
         <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
     </div>
@@ -24,7 +24,7 @@
 <div class="card text-center">
   <div class="card-header">
 <b>Olá {{username}}
-    {% if imagens %}
+    {% if imagens %} {{ minutos_int }}
         <a href="{% url 'indexperfil' %}"><img src="{{ imagens.first.foto.url }}" width="15%" style="border-radius: 40%;"></a>
     Pontos: {{ pontos.pontos }}
     {% else %}
@@ -33,8 +33,14 @@
 </b>
   </div>
   <div class="card-body">
-
-    <h5 class="card-title">Mural Geral</h5>
+                   {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}}">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+    <h4 class="card-title">Fale com todos</h4>
     <p class="card-text"></p>
     <form action="{% url 'indexplataforma' %}" method="post">{% csrf_token %}
         <textarea rows="3" cols="40" placeholder="Voce tem 255 caracteres . . . " name="mensagem_de_hoje"></textarea>

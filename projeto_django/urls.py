@@ -8,6 +8,8 @@ urlpatterns = [
     path('auth/', include('autenticacao.urls')),
     path('', include('plataforma.urls')),
     path('', include('ranking.urls')),
+    path('', include('recuperar_senha.urls')),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

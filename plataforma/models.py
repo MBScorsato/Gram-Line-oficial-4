@@ -1,6 +1,19 @@
+from datetime import datetime, timedelta
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
+
+class UltimaMensagem(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    data_ultima_mensagem = models.DateTimeField(default=timezone.now)
+
+    def atualizar_data_ultima_mensagem(self):
+        self.data_ultima_mensagem = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.usuario.username
 
 class Mensagem(models.Model):
     mensagem = models.CharField(max_length=255)

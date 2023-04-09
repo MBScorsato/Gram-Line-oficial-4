@@ -22,7 +22,7 @@ def cadastro(request):
             return redirect('/auth/cadastro')
 
         # VERIFIQUE SE O FORMULÁRIO ESTA PREENCHIDO .STRIP NÃO CONSIDERA OS ESPAÇOS
-        if len(username.strip()) < 0 or len(email.strip()) == 0 or len(senha.strip()) ==  0:
+        if len(username.strip()) < 0 or len(email.strip()) == 0 or len(senha.strip()) == 0:
             messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
             return redirect('/auth/cadastro')
 
