@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('plataforma.urls')),
     path('', include('ranking.urls')),
     path('', include('recuperar_senha.urls')),
+    path('', include('atualizar_perfil.urls')),
 
 ]
 

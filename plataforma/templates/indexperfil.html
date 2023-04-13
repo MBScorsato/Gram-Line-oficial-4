@@ -17,12 +17,20 @@
         <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
     </div>
 </nav>
-
-
 <center>
-    Galeria | Seguindo | Seguidor | Amigos | Sair
-</center>
-<br>
+<div class="card border-dark mb-4" style="max-width: 25rem;">
+  <div class="card-header"><center>
+    Galeria | Seguindo | Seguidor | Amigos | <a href="{% url 'sair' %}">Sair</a>
+</center></div>
+  <div class="card-body">
+    <h5 class="card-title">Atualizar cadastro</h5>
+    <p class="card-text">
+
+    </p>
+<button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'atualizar_perfil' %}'">
+    ATUALIZAR PERFIL</button>
+
+      <HR>
 <center><span class="badge text-bg-success">Selecione sua foto de perfil</span></center>
 <br>
 <form method="post" enctype="multipart/form-data" onsubmit="enviarForm(event)">
@@ -34,13 +42,14 @@
   <button type="submit" class="btn btn-primary" id="botao-enviar" disabled>Enviar</button></center>
 </form><br>
 <hr>
-
 <div class="card">
   <div class="card-body">
-<center>
-Quem somos? | Objetivos | Diferencial | Nossas outras redes
-  </div></div>
-</center>
+    <center>
+        Quem somos? | Objetivos | Diferencial | Nossas outras redes
+    </center>
+  </div>
+</div>
+
 
 <div class="alert alert-success" id="alerta-sucesso" style="display: none;">
   A foto foi enviada com sucesso!
@@ -49,6 +58,11 @@ Quem somos? | Objetivos | Diferencial | Nossas outras redes
 <div class="alert alert-danger" id="alerta-erro" style="display: none;">
   Alguma coisa deu errado. Tente novamente!
 </div>
+
+
+  </div>
+</div>
+</center>
 
 <script>
   function ativaBotao() {

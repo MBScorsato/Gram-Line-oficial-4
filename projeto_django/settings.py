@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'autenticacao',
     'plataforma',
     'ranking',
-    'recuperar_senha'
+    'recuperar_senha',
+    'atualizar_perfil',
+
 ]
 
 MIDDLEWARE = [
