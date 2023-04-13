@@ -1,0 +1,59 @@
+{% load static %}
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  </head>
+  <body>
+
+<nav class="navbar navbar-expand-lg" style="background-color: blue;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'indexplataforma' %}" style="color: white;"><b>GramLine</b></a>
+        <a class="navbar-brand" href="{% url 'indexranking' %}" style="color: white;">Ranking</a>
+        <a class="navbar-brand" href="#" style="color: white;">Direct</a>
+        <a class="navbar-brand" href="{% url 'indexperfil' %}" style="color: white;">Perfil</a>
+    </div>
+</nav>
+<center>
+<div class="card border-dark mb-4" style="max-width: 25rem;">
+  <div class="card-header"><center>
+    Galeria | Seguindo | Seguidor | Amigos | <a href="{% url 'sair' %}">Sair</a>
+</center></div>
+  <div class="card-body">
+    <h5 class="card-title">Atualizar cadastro</h5>
+    <p class="card-text">
+    </p>
+      <div class="card text-center">
+  <div class="card-header">
+     Você não pode mudar seu Username pois é único
+  </div>
+             {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}}">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+          <br>
+<form method="post" action="{% url 'atualizar_perfil' %}">
+    {% csrf_token %}
+    <label for="email">Username: </label>
+    <input type="text" id="username" name="username" value="{{ username }}" readonly><br><br>
+    <label for="nova_senha">Email: </label>
+    <input type="text" id="email" name="email" value="{{ email }}"><br><br>
+    <label for="nova_senha">Nova senha: </label>
+    <input type="password" id="nova_senha" name="nova_senha"><br><br>
+    <input type="submit" value="Atualizar">
+</form>
+
+          <br>
+      </div>
+  </div>
+</div>
+</center>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  </body>
+</html>
