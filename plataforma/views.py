@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime, timedelta
-from plataforma.models import Mensagem, FotoPerfil, PontosUsuario, UltimaMensagem
+from plataforma.models import Mensagem, FotoPerfil, PontosUsuario, UltimaMensagem, PropagandaUm
 from django.contrib.messages import constants
 
 
@@ -22,11 +22,14 @@ def indexplataforma(request):
         usuario = request.user
         pontos, created = PontosUsuario.objects.get_or_create(usuario_pontos=usuario)
 
+        propagandas = PropagandaUm.objects.all()
+
         context = {
             'mensagens': mensagens,
             'username': username,
             'imagens': imagens,
             'pontos': pontos,
+            'propagandas': propagandas,
         }
         return render(request, 'plataforma.html', context)
 
