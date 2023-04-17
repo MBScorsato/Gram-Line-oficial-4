@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime, timedelta
@@ -100,5 +100,17 @@ def indexperfil(request):
         imagem_usuario.save()
         return redirect(reverse('indexperfil'))
 
-    return redirect(reverse('indexperfil'))
 
+@login_required(login_url='/auth/cadastro')
+def ver_perfil_user(request, user_id):
+
+    # Busca o usuário com o user_id correspondente ou retorna uma página 404 se não encontrado
+    usuario = get_object_or_404(User, pk=user_id)
+    foto = FotoPerfil.objects.filter(usuario_foto=usuario).first()
+    pontos_usuario = PontosUsuario.objects.get(usuario_pontos=usuario)
+    pontos = pontos_usuario.pontos
+
+    context = {'usuario': usuario,
+               'foto': foto,
+               'pontos': pontos}
+    return render(request, 'ver_perfil_user.html', context)

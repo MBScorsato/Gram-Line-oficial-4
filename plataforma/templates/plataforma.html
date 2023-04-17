@@ -61,14 +61,20 @@
     <div class="card mb-3" style="max-width: 600px;">
         <div class="row g-0">
             <div class="col-md-4">
+                 <h5 class="card-title">
+                            <a href="{% url 'ver_perfil_user' mensagem.usuario.id %}">
+                            <font color="#000080" size="6">
+                            {{ mensagem.usuario }}
+                        </font></a>
+                        </h5>
                 {% if foto %}
-                    <img src="{{ foto.foto.url }}" width="90%">
+                    <img src="{{ foto.foto.url }}" width="80%">
                 {% endif %}
             </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">{{ mensagem.usuario }}</h5>
-                        <p class="card-text">{{ mensagem.mensagem }}</p>
+
+                        <p class="card-text"> <font color="#363636" size="4">" {{ mensagem.mensagem }} "</font></p>
                         <p class="card-text"><small class="text-body-secondary"><a href="#">< voltar </a></small></p>
                     </div>
                 </div>
@@ -77,14 +83,14 @@
 
     {% endfor %}
 
-        {% if forloop.counter == 3 %}
+        {% if forloop.counter == 5 %}
         {% for propaganda in propagandas %}
          {% if propaganda.ativar_propaganda %}
             <div class="card border-info mb-3" style="max-width: 50rem;">
                 <div class="card-header">
                     <div class="propaganda">
                         <h2>{{ propaganda.nome_empresa }}</h2>
-                        <img src="{{ propaganda.imagem_empresa.url }}" alt="{{ propaganda.nome_empresa }}" width="85%">
+                        <img src="{{ propaganda.imagem_empresa.url }}" alt="{{ propaganda.nome_empresa }}" width="90%">
                         <p>{{ propaganda.texto_empresa }}</p>
                         <a href="{{ propaganda.link_empresa }}">Clique aqui para saber mais</a>
                     </div>

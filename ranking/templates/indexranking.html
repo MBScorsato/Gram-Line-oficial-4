@@ -1,7 +1,7 @@
 {% load static %}
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-      xmlns="http://www.w3.org/1999/html">
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +27,7 @@
 "Crie conexões e aumente sua visibilidade no Rankin. Quanto mais você interage,
 mais visível você se torna e mais oportunidades surgem."
       <hr><center></center>
-      <b>{{ usuario_logado }}</b> com <b>{{pontos_do_usuario}}</b> pontos
+      <b><a href="{% url 'ver_perfil_user' usuario_logado.id %}">{{ usuario_logado }}</a></b> com <b>{{pontos_do_usuario}}</b> pontos
 
 
     </center>
@@ -55,7 +55,9 @@ mais visível você se torna e mais oportunidades surgem."
         <td>
             <div class="card">
                 <div class="card-body">
-           <p>{{ user.username }}
+           <p>
+               <a href="{% url 'ver_perfil_user' user.id%}">{{ user.username }}</a>
+
                 </div></div>
         </td>
         <td>

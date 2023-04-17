@@ -25,18 +25,19 @@
   <div class="card-body">
     <h5 class="card-title">Atualizar cadastro</h5>
     <p class="card-text">
+        <a href="{% url 'indexplataforma' %}"><img src="{{ imagens.first.foto.url }}" width="20%" style="border-radius: 40%;"></a>
 
     </p>
 <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'atualizar_perfil' %}'">
     ATUALIZAR PERFIL</button>
 
       <HR>
-<center><span class="badge text-bg-success">Selecione sua foto de perfil</span></center>
+      <center><span class="badge text-bg-success"><h3>Selecione sua foto de perfil</h3></span></center>
 <br>
 <form method="post" enctype="multipart/form-data" onsubmit="enviarForm(event)">
   {% csrf_token %}
   <input type="file" name="imagem" onchange="ativaBotao()">
-    <center><br><span class="badge text-bg-danger">Depois de selecionar a imagem 'click' em Enviar</span>
+    <center><br><span class="badge text-bg-danger"><h3>Agora 'click' em Enviar</h3></span>
 <br><br>
 
   <button type="submit" class="btn btn-primary" id="botao-enviar" disabled>Enviar</button></center>
@@ -96,9 +97,12 @@
         botao.innerHTML = "Enviar"; // Muda o texto do botão de volta para "Enviar"
         form.reset(); // Reseta o formulário
         alertaSucesso.style.display = "block"; // Exibe o alerta de sucesso
+
         setTimeout(function() {
           alertaSucesso.style.display = "none";
         }, 5000); // Oculta o alerta depois de 5 segundos
+        location.reload();
+
       } else {
         botao.innerHTML = "Enviar"; // Muda o texto do botão de volta para "Enviar"
         alertaErro.style.display = "block"; // Exibe o alerta de erro
