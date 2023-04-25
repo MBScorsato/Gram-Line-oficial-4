@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime, timedelta
+from atualizar_perfil.models import StatusFrase
 from plataforma.models import Mensagem, FotoPerfil, PontosUsuario, UltimaMensagem, PropagandaUm
 from django.contrib.messages import constants
 
@@ -25,6 +26,7 @@ def indexplataforma(request):
         propagandas = PropagandaUm.objects.all()
 
         context = {
+            #'frase': frase,
             'mensagens': mensagens,
             'username': username,
             'imagens': imagens,
@@ -103,14 +105,24 @@ def indexperfil(request):
 
 @login_required(login_url='/auth/cadastro')
 def ver_perfil_user(request, user_id):
+    if request.method == 'GET':
+        # Busca o usuário com o user_id correspondente ou retorna uma página 404 se não encontrado
+        usuario = get_object_or_404(User, pk=user_id)
+        foto = FotoPerfil.objects.filter(usuario_foto=usuario).first()
+        pontos_usuario = PontosUsuario.objects.get(usuario_pontos=usuario)
+        pontos = pontos_usuario.pontos
 
-    # Busca o usuário com o user_id correspondente ou retorna uma página 404 se não encontrado
-    usuario = get_object_or_404(User, pk=user_id)
-    foto = FotoPerfil.objects.filter(usuario_foto=usuario).first()
-    pontos_usuario = PontosUsuario.objects.get(usuario_pontos=usuario)
-    pontos = pontos_usuario.pontos
+        usuario = request.user
+        try:
+            frase = StatusFrase.objects.get(status_frase=user_id)
+        except:
+            frase = ''
 
-    context = {'usuario': usuario,
-               'foto': foto,
-               'pontos': pontos}
-    return render(request, 'ver_perfil_user.html', context)
+        context = {'usuario': usuario,
+                   'frase': frase,
+                   'foto': foto,
+                   'pontos': pontos}
+        return render(request, 'ver_perfil_user.html', context)
+
+    elif request.method == 'POST':
+        return render(request, 'ver_perfil_user.html')

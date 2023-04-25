@@ -40,7 +40,11 @@
                                 </div>
                             {% endfor %}
                         {% endif %}
-    <h4 class="card-title">Fale com todos</h4>
+    <h4 class="card-title">
+        <button type="button" class="btn btn-outline-success">Meu Mural</button>
+        <hr>
+        Deixe sua mensagem para todos <br>(a cada 1h)
+</h4>
     <p class="card-text"></p>
     <form action="{% url 'indexplataforma' %}" method="post">{% csrf_token %}
         <textarea rows="3" cols="40" placeholder="Voce tem 255 caracteres . . . " name="mensagem_de_hoje"></textarea>
