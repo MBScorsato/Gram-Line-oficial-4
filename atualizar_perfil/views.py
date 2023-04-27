@@ -64,13 +64,17 @@ def atualizar_perfil(request):
 
         # SALVANDO O OPTIUN DO HTML
 
-
         # obter o usuário atual
         usuario = request.user
         # obter o status de relacionamento do usuário atual
         status_relacionamento, created = StatusRelacionamento.objects.get_or_create(status_relacionamento=usuario)
         # obter a opção de relacionamento selecionada pelo usuário
-        opcao_relacionamento = request.POST.get('relacionamento', '').strip()
+        opcao_relacionamento = request.POST.get('relacionamento', f'{status_relacionamento}').strip()
+        if opcao_relacionamento is not None:
+            status_relacionamento.relacionamento = opcao_relacionamento
+        else:
+            status_relacionamento.relacionamento = 'Não informado'
+
         # atualizar o status de relacionamento com a opção selecionada
         status_relacionamento.relacionamento = opcao_relacionamento
         # salvar o status de relacionamento no banco de dados
