@@ -13,12 +13,7 @@
 
         <div class="row">
             <div class="col-md-7">
-                <div class="logo_sidebar">
-                    <h2 class="logo">
 
-                        <img class="img_logo_sidebar" src="">
-                    </h2>
-                </div>
                         {% if messages %}
                             {% for message in messages %}
                                 <div class="alert {{message.tags}}">
@@ -27,6 +22,8 @@
                             {% endfor %}
                         {% endif %}
                 <div class="area_cadastrar">
+                                        <center><h6 class="display-3"><font color="#000080">{GramLine}</font></h6></center>
+
                     <form action="{% url 'cadastro' %}" method="post">{% csrf_token %}
                         <h2 class="titulo_area_cadastrar">Cadastre-se</h2>
                         <br>
@@ -53,7 +50,7 @@
                 <div class="corpo_sidebar">
                     <div>
 
-                        <h2 class="titulo cor_branca">GramLine</h2>
+                        <h2 class="titulo cor_branca">{GramLine}</h2>
                     </div>
                     <div>
                         <br><br>

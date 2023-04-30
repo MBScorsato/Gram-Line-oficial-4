@@ -37,23 +37,53 @@ def atualizar_perfil(request):
         # VERIFICA E INFORMA QUE SENHA TEM QUE TER NO MÍNIMO 6 DIGITOS
         if nova_senha and len(nova_senha.strip()) < 6:
             messages.add_message(request, constants.ERROR, 'A senha tem que ter pelo menos 6 digitos')
-            return render(request, 'atualizar_perfil.html', {'email': email, 'username': usuario.username})
+
+            status_frase = StatusFrase.objects.get(status_frase=usuario).frase
+            opcao_relacionamento = StatusRelacionamento.objects.get(status_relacionamento=usuario).relacionamento
+
+            return render(request, 'atualizar_perfil.html',
+                          {'email': usuario.email,
+                           'username': usuario.username,
+                           'status_frase': status_frase,
+                           'opcao_relacionamento': opcao_relacionamento
+
+                           })
 
         # VERIFICA E INFORMA QUE O EMAIL É INVÁLIDO
         if email and (not '@' in email or not '.' in email):
             messages.add_message(request, constants.ERROR, 'O email é inválido')
-            return render(request, 'atualizar_perfil.html', {'email': email, 'username': usuario.username})
+
+            status_frase = StatusFrase.objects.get(status_frase=usuario).frase
+            opcao_relacionamento = StatusRelacionamento.objects.get(status_relacionamento=usuario).relacionamento
+
+            return render(request, 'atualizar_perfil.html',
+                          {'email': usuario.email,
+                           'username': usuario.username,
+                           'status_frase': status_frase,
+                           'opcao_relacionamento': opcao_relacionamento
+
+                           })
 
         # ALTERA O EMAIL DO USUÁRIO
         if email and email != usuario.email:
             # verifica se o email já existe
             if User.objects.filter(email=email).exists():
                 messages.add_message(request, constants.ERROR, 'O email já está sendo usado por outra pessoa')
-                return render(request, 'atualizar_perfil.html', {'email': email, 'username': usuario.username})
 
             usuario.email = email
             usuario.save()
             messages.add_message(request, constants.SUCCESS, 'Email alterado com sucesso')
+
+            status_frase = StatusFrase.objects.get(status_frase=usuario).frase
+            opcao_relacionamento = StatusRelacionamento.objects.get(status_relacionamento=usuario).relacionamento
+
+            return render(request, 'atualizar_perfil.html',
+                          {'email': usuario.email,
+                           'username': usuario.username,
+                           'status_frase': status_frase,
+                           'opcao_relacionamento': opcao_relacionamento
+
+                           })
 
         # ALTERA A SENHA DO USUÁRIO
         if nova_senha:
@@ -61,6 +91,17 @@ def atualizar_perfil(request):
             usuario.save()
             update_session_auth_hash(request, usuario)
             messages.add_message(request, constants.SUCCESS, 'Senha alterada com sucesso')
+
+            status_frase = StatusFrase.objects.get(status_frase=usuario).frase
+            opcao_relacionamento = StatusRelacionamento.objects.get(status_relacionamento=usuario).relacionamento
+
+            return render(request, 'atualizar_perfil.html',
+                          {'email': usuario.email,
+                           'username': usuario.username,
+                           'status_frase': status_frase,
+                           'opcao_relacionamento': opcao_relacionamento
+
+                           })
 
         # SALVANDO O OPTIUN DO HTML
 

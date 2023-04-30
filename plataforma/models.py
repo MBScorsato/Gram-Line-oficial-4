@@ -48,3 +48,13 @@ class PropagandaUm(models.Model):
         return self.nome_empresa
 
 
+class Seguidores(models.Model):
+    seguidor = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_seguidor = models.IntegerField()
+
+
+    def __str__(self):
+        return self.seguidor.username
+
+
+

@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime, timedelta
-from atualizar_perfil.models import StatusFrase
-from plataforma.models import Mensagem, FotoPerfil, PontosUsuario, UltimaMensagem, PropagandaUm
+from atualizar_perfil.models import StatusFrase, StatusRelacionamento
+from plataforma.models import Mensagem, FotoPerfil, PontosUsuario, UltimaMensagem, PropagandaUm, Seguidores
 from django.contrib.messages import constants
 
 
@@ -114,15 +114,30 @@ def ver_perfil_user(request, user_id):
 
         usuario = request.user
         try:
+            relacionamento = StatusRelacionamento.objects.get(status_relacionamento=user_id)
+        except:
+            relacionamento = 'Amizade'
+        try:
             frase = StatusFrase.objects.get(status_frase=user_id)
         except:
             frase = ''
-
+        # id_perfil = user_id
         context = {'usuario': usuario,
                    'frase': frase,
                    'foto': foto,
-                   'pontos': pontos}
+                   'pontos': pontos,
+                   'relacionamento': relacionamento,
+                   # 'id_perfil': id_perfil,
+                   }
         return render(request, 'ver_perfil_user.html', context)
 
     elif request.method == 'POST':
+        # se ja segue la no html aparece um botão 'deixar de seguir'
+        # se não segue aparecer um botão 'seguir'
+
+        # gravar ID do perfil a ser seguido
+        user = request.user
+        seguidor_banco = Seguidores(seguidor=user, id_seguidor=user_id)
+        seguidor_banco.save()
+
         return render(request, 'ver_perfil_user.html')
