@@ -148,6 +148,6 @@ def atualizar_perfil(request):
                       {'email': usuario.email,
                        'username': usuario.username,
                        'status_frase': status_frase,
-                       'opcao_relacionamento': opcao_relacionamento
+                       'opcao_relacionamento': opcao_relacionamento_banco
 
                        })

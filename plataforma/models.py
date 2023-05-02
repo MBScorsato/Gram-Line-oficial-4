@@ -51,7 +51,7 @@ class PropagandaUm(models.Model):
 class Seguidores(models.Model):
     seguidor = models.ForeignKey(User, on_delete=models.CASCADE)
     id_seguidor = models.IntegerField()
-
+    simounao = models.BooleanField(default=False)
 
     def __str__(self):
         return self.seguidor.username

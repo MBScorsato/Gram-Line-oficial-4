@@ -26,7 +26,7 @@ def indexplataforma(request):
         propagandas = PropagandaUm.objects.all()
 
         context = {
-            #'frase': frase,
+            # 'frase': frase,
             'mensagens': mensagens,
             'username': username,
             'imagens': imagens,
@@ -132,12 +132,26 @@ def ver_perfil_user(request, user_id):
         return render(request, 'ver_perfil_user.html', context)
 
     elif request.method == 'POST':
+        # eu sei que user_id esta vindo o valor da URL do usuario escolhido e não do usuario logado
+        user = request.user
         # se ja segue la no html aparece um botão 'deixar de seguir'
         # se não segue aparecer um botão 'seguir'
+        # Obtém o ID do usuário autenticado
+        user_id_logado = user.id
+        if Seguidores.objects.filter(seguidor=request.user, id_seguidor=user_id).exists():
+            sim_nao = Seguidores.objects.get(seguidor=request.user, id_seguidor=user_id).simounao
+        else:
+            sim_nao = False
 
-        # gravar ID do perfil a ser seguido
-        user = request.user
-        seguidor_banco = Seguidores(seguidor=user, id_seguidor=user_id)
-        seguidor_banco.save()
+        # se 'sim_não' for verdadeiro, significa que ja esta sendo seguido este perfil e não salva
+        # se usuario tentar seguir ele mesmo, será desvido para não continuar
+        if user_id_logado == user_id or sim_nao == True:
+            nao = 'Não salva'
+            return render(request, 'ver_perfil_user.html', {'nao': nao})
 
-        return render(request, 'ver_perfil_user.html')
+        # usei o 'else' para dividir o progrrama, case seja False ou seja caso ainda não eseja seguindo,
+        # salva e muda de 'False para True'
+        else:
+            seguidor_banco = Seguidores(seguidor=user, id_seguidor=user_id, simounao=True)
+            seguidor_banco.save()
+            return render(request, 'ver_perfil_user.html')
