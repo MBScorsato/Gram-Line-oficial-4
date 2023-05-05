@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'ranking',
     'recuperar_senha',
     'atualizar_perfil',
-
+    'seguindo',
 ]
 
 MIDDLEWARE = [

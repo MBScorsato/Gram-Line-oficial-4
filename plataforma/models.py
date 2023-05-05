@@ -54,7 +54,11 @@ class Seguidores(models.Model):
     simounao = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.seguidor.username
+        usuario_seguido = User.objects.get(id=self.id_seguidor)
+        return f"{usuario_seguido.username}"
+
+
+
 
 
 
