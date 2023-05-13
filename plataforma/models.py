@@ -36,6 +36,9 @@ class PontosUsuario(models.Model):
     usuario_pontos = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     pontos = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f"{self.pontos}"
+
 
 class PropagandaUm(models.Model):
     nome_empresa = models.CharField(max_length=100)

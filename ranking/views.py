@@ -18,7 +18,3 @@ def indexranking(request):
 
     return render(request, 'indexranking.html', context)
 
-
-
-
-

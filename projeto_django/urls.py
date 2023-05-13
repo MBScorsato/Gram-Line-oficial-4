@@ -11,6 +11,9 @@ urlpatterns = [
     path('', include('recuperar_senha.urls')),
     path('', include('atualizar_perfil.urls')),
     path('', include('seguindo.urls')),
+    path('', include('meus_seguidores.urls')),
+    path('', include('meu_mural.urls')),
+    path('', include('procurar.urls')),
 
 ]
 
