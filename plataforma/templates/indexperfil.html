@@ -20,7 +20,11 @@
 <center>
 <div class="card border-dark mb-4" style="max-width: 25rem;">
   <div class="card-header"><center>
-      Galeria | <a href="{% url 'seguindo' %}">Seguindo</a> | Seguidor | Amigos | <a href="{% url 'sair' %}">Sair</a>
+      Galeria |
+      <a href="{% url 'seguindo' %}">Seguindo</a> |
+      <a href="{% url 'meus_seguidores' %}">Seguidor </a>|
+      <a href="{% url 'procurar' %}">Procurar </a>|
+      <a href="{% url 'sair' %}">Sair</a>
 </center></div>
   <div class="card-body">
     <h5 class="card-title">Atualizar cadastro</h5>
@@ -46,7 +50,26 @@
 <div class="card">
   <div class="card-body">
     <center>
-        Quem somos? | Objetivos | Diferencial | Nossas outras redes
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Quem Somos?</button>
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasTopLabel">Quem somos?</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    "O Gram Line é um aplicativo de rede social que foi criado por Murilo Barbosa Scorsato. Desde o início,
+      levei a sério o meu trabalho para criar uma plataforma que pudesse conectar as pessoas e permitir que
+      elas se expressem livremente. Com o Gram Line, eu queria oferecer uma experiência única de
+      compartilhamento de conteúdo que fosse fácil de usar e que estivesse disponível para todos.
+      Espero que você goste do aplicativo e aproveite ao máximo todas as suas funcionalidades.
+      Se você tiver alguma dúvida ou feedback, não hesite em entrar em contato conosco."
+  </div>
+</div>
+
+
+
+
     </center>
   </div>
 </div>

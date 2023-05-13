@@ -25,7 +25,7 @@
   <div class="card-header">
 <b>Olá {{username}}
     {% if imagens %} {{ minutos_int }}
-        <a href="{% url 'indexperfil' %}"><img src="{{ imagens.first.foto.url }}" width="15%" style="border-radius: 40%;"></a>
+        <a href="{% url 'indexperfil' %}"><img src="{{ imagens.first.foto.url }}" width="18%" style="border-radius: 40%;"></a>
     Pontos: {{ pontos.pontos }}
     {% else %}
     - <span class="badge text-bg-danger">Selecioe sua foto de Perfil</span> - <a href="{% url 'indexperfil' %}">AQUI</a>
@@ -41,7 +41,7 @@
                             {% endfor %}
                         {% endif %}
     <h4 class="card-title">
-        <button type="button" class="btn btn-outline-success">Meu Mural</button>
+        <a href="{% url 'meu_mural' %}"><button type="button" class="btn btn-outline-success">Meu Mural</button></a>
         <hr>
         Deixe sua mensagem para todos <br>(a cada 1h)
 </h4>
@@ -69,11 +69,11 @@
                             <a href="{% url 'ver_perfil_user' mensagem.usuario.id %}">
                             <font color="#000080" size="6">
                             {{ mensagem.usuario }}
-                        </font></a>
-                        </h5>
+                            </font>
+                 </h5>
                 {% if foto %}
-                    <img src="{{ foto.foto.url }}" width="80%">
-                {% endif %}
+                    <img src="{{ foto.foto.url }}" width="90%">
+                {% endif %}</a>
             </div>
                 <div class="col-md-8">
                     <div class="card-body">

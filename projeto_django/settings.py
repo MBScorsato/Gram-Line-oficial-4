@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'recuperar_senha',
     'atualizar_perfil',
     'seguindo',
+    'meus_seguidores',
+    'meu_mural',
+    'procurar',
+
 ]
 
 MIDDLEWARE = [

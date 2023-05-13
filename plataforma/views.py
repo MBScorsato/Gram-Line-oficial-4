@@ -112,7 +112,6 @@ def ver_perfil_user(request, user_id):
         pontos_usuario = PontosUsuario.objects.get(usuario_pontos=usuario)
         pontos = pontos_usuario.pontos
 
-        usuario = request.user
         try:
             relacionamento = StatusRelacionamento.objects.get(status_relacionamento=user_id)
         except:
@@ -132,6 +131,29 @@ def ver_perfil_user(request, user_id):
         return render(request, 'ver_perfil_user.html', context)
 
     elif request.method == 'POST':
+        # Busca o usuário com o user_id correspondente ou retorna uma página 404 se não encontrado
+        usuario = get_object_or_404(User, pk=user_id)
+        foto = FotoPerfil.objects.filter(usuario_foto=usuario).first()
+        pontos_usuario = PontosUsuario.objects.get(usuario_pontos=usuario)
+        pontos = pontos_usuario.pontos
+
+        try:
+            relacionamento = StatusRelacionamento.objects.get(status_relacionamento=user_id)
+        except:
+            relacionamento = 'Amizade'
+        try:
+            frase = StatusFrase.objects.get(status_frase=user_id)
+        except:
+            frase = ''
+            # id_perfil = user_id
+        context = {'usuario': usuario,
+                   'frase': frase,
+                   'foto': foto,
+                   'pontos': pontos,
+                   'relacionamento': relacionamento,
+                   # 'id_perfil': id_perfil,
+                   }
+
         # eu sei que user_id esta vindo o valor da URL do usuario escolhido e não do usuario logado
         user = request.user
         # se ja segue la no html aparece um botão 'deixar de seguir'
@@ -145,13 +167,22 @@ def ver_perfil_user(request, user_id):
 
         # se 'sim_não' for verdadeiro, significa que ja esta sendo seguido este perfil e não salva
         # se usuario tentar seguir ele mesmo, será desvido para não continuar
-        if user_id_logado == user_id or sim_nao == True:
-            nao = 'Não salva'
-            return render(request, 'ver_perfil_user.html', {'nao': nao})
+        if user_id_logado == user_id:
+            messages.add_message(request, constants.ERROR, 'Vpcê não pode seguir você mesmo!')
+            return render(request, 'ver_perfil_user.html', context)
+        if sim_nao:
+            messages.add_message(request, constants.ERROR, 'Você já segue este perfil!!')
+            return render(request, 'ver_perfil_user.html', context)
 
         # usei o 'else' para dividir o progrrama, case seja False ou seja caso ainda não eseja seguindo,
         # salva e muda de 'False para True'
         else:
             seguidor_banco = Seguidores(seguidor=user, id_seguidor=user_id, simounao=True)
             seguidor_banco.save()
-            return render(request, 'ver_perfil_user.html')
+            pontos_usuario = PontosUsuario.objects.get(usuario_pontos=user_id)
+            pontos_usuario.pontos += 2
+            pontos_usuario.save()
+
+            messages.add_message(request, constants.SUCCESS, 'Seguindo apartir de agora')
+
+            return render(request, 'ver_perfil_user.html', context)
